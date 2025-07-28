@@ -1,0 +1,67 @@
+package com.example.threadconcept;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
+
+    private List<Card> cardList = new ArrayList<>();
+
+    public CardAdapter() {
+    }
+
+    public void setCards(List<Card> cardList){
+        this.cardList.clear();
+        this.cardList.addAll(cardList);
+        notifyDataSetChanged();
+    }
+
+    public void updateCard(Card updatedCard, int position){
+        this.cardList.set(position, updatedCard);
+//        notifyDataSetChanged();
+        notifyItemChanged(position, updatedCard);
+    }
+
+    public static class CardViewHolder extends RecyclerView.ViewHolder{
+        TextView tv_id;
+        TextView tv_name;
+        public CardViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv_id = itemView.findViewById(R.id.textViewId);
+            tv_name = itemView.findViewById(R.id.textViewName);
+        }
+    }
+
+    @NonNull
+    @Override
+    public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card, parent, false);
+        return new CardViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
+        Card card = cardList.get(position);
+        holder.tv_id.setText(String.valueOf(card.getId()));
+        holder.tv_name.setText(card.getLogin());
+    }
+
+    @Override
+    public int getItemCount() {
+        return cardList.size();
+    }
+
+    public void updateData(List<Card> newCards) {
+        this.cardList = newCards;
+        notifyDataSetChanged();
+    }
+}
