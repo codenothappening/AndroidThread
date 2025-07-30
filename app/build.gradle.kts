@@ -36,6 +36,8 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation("com.squareup.okhttp3:okhttp:5.1.0")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.5")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation(libs.activity)
     implementation(libs.constraintlayout)

@@ -1,7 +1,6 @@
 package com.example.threadconcept;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -9,19 +8,19 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -57,29 +56,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchDataFromAPI() {
-        runOnUiThread(() -> {
-            recyclerView.setVisibility(View.GONE);
-        });
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String jsonResponse = HttpRequest.get(url);
-                    Card[] usersArray = gson.fromJson(jsonResponse,Card[].class);
-                    List<Card> users = Arrays.asList(usersArray);
-                    runOnUiThread(() -> {
-                        progressBar.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-//                        cardList = new ArrayList<>(users);
-                        cardAdapter.setCards(users);
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    runOnUiThread(() ->
-                            Toast.makeText(MainActivity.this, "API fetch failed", Toast.LENGTH_SHORT).show()
-                    );
-                }
+        runOnUiThread(() -> recyclerView.setVisibility(View.GONE));
+
+        Single.create(emitter -> {
+            try {
+                String jsonResponse = HttpRequest.get(url);
+                Card[] userArray = gson.fromJson(jsonResponse,Card[].class);
+                List<Card> users = Arrays.asList(userArray);
+                emitter.onSuccess(users);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }).start();
+            })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        users -> {
+                            progressBar.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            cardAdapter.setCards((List<Card>) users);
+                        },
+                        throwable -> {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(MainActivity.this, "API fetch failed", Toast.LENGTH_SHORT).show();
+                            throwable.printStackTrace();
+                        }
+                );
     }
 }
