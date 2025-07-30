@@ -2,25 +2,25 @@ package com.example.threadconcept;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.IOException;
-
 public class Card {
 
     @SerializedName("login")
-    private String login;
-    private int id;
+    private String userName;
+    @SerializedName("id")
+    private int userId;
 
-    public Card(int id, String login) {
-        this.id = id;
-        this.login = login;
+
+    public Card(int userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
     }
 
 
-    public String getLogin() {
-        return login;
+    public String getUserName() {
+        return userName;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 }

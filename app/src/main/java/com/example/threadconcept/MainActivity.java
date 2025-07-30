@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
 
-    List<Card> cardList;
-
     String url = "https://api.github.com/users";
 
     private final Gson gson = new Gson();

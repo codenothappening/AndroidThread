@@ -15,8 +15,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     private List<Card> cardList = new ArrayList<>();
 
-    public CardAdapter() {
-    }
+
 
     public void setCards(List<Card> cardList){
         this.cardList.clear();
@@ -51,8 +50,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         Card card = cardList.get(position);
-        holder.tv_id.setText(String.valueOf(card.getId()));
-        holder.tv_name.setText(card.getLogin());
+        holder.tv_id.setText(String.valueOf(card.getUserId()));
+        holder.tv_name.setText(card.getUserName());
     }
 
     @Override
