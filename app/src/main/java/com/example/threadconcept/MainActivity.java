@@ -30,12 +30,9 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         initUI();
-        btnGetData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pbLoadData.setVisibility(View.VISIBLE);
-                fetchDataFromAPI();
-            }
+        btnGetData.setOnClickListener(v -> {
+            pbLoadData.setVisibility(View.VISIBLE);
+            fetchDataFromAPI();
         });
     }
     private void initUI(){
@@ -66,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     private void fetchDataFromAPISuccess() throws IOException {
         String jsonResponse = HttpRequest.get(url);
         Card[] usersArray = gson.fromJson(jsonResponse,Card[].class);
+       // Respone  response = gson.fromJson(jsonResponse,Response.class);
+        //code ,message ,data
         List<Card> users = Arrays.asList(usersArray);
         updateUI(users);
     }

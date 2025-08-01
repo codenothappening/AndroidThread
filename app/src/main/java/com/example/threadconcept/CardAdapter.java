@@ -14,19 +14,11 @@ import java.util.List;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
     private List<Card> cardList = new ArrayList<>();
-
-
-
     public void setCards(List<Card> cardList){
         this.cardList.clear();
         this.cardList.addAll(cardList);
         notifyDataSetChanged();
     }
-
-//    public void updateCard(Card updatedCard, int position){
-//        this.cardList.set(position, updatedCard);
-//        notifyDataSetChanged();
-//    }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder{
         TextView tv_id;
@@ -42,7 +34,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card, parent, false);
+                .inflate(R.layout.item_card, parent, false);
         return new CardViewHolder(view);
     }
 
