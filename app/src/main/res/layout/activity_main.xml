@@ -8,27 +8,27 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/getButton"
+        android:id="@+id/btn_getData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:text="Get Data"
-        app:layout_constraintBottom_toTopOf="@id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@id/rv_Cards"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
         />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/pb_loadData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/rv_Cards"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rv_Cards"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"

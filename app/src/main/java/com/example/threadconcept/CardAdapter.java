@@ -23,19 +23,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         notifyDataSetChanged();
     }
 
-    public void updateCard(Card updatedCard, int position){
-        this.cardList.set(position, updatedCard);
+//    public void updateCard(Card updatedCard, int position){
+//        this.cardList.set(position, updatedCard);
 //        notifyDataSetChanged();
-        notifyItemChanged(position, updatedCard);
-    }
+//    }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder{
         TextView tv_id;
         TextView tv_name;
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_id = itemView.findViewById(R.id.textViewId);
-            tv_name = itemView.findViewById(R.id.textViewName);
+            tv_id = itemView.findViewById(R.id.tv_id);
+            tv_name = itemView.findViewById(R.id.tv_name);
         }
     }
 
