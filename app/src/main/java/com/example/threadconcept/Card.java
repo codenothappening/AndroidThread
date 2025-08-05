@@ -16,11 +16,20 @@ public class Card {
     }
 
 
+
     public String getUserName() {
         return userName;
     }
 
     public int getUserId() {
         return userId;
+    }
+
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
+
+    public void setUserId(int id){
+        this.userId = id;
     }
 }

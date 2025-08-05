@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+//    alias(libs.plugins.google.gms)  // Correct plugin reference
+//    id("kotlin-kapt")
 }
 
 android {
@@ -14,6 +16,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures{
+        dataBinding = true
     }
 
     buildTypes {
@@ -32,7 +38,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation("com.squareup.okhttp3:okhttp:5.1.0")

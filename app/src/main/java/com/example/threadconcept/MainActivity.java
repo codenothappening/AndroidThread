@@ -1,10 +1,10 @@
 package com.example.threadconcept;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         initUI();
         btnGetData.setOnClickListener(v -> {
             pbLoadData.setVisibility(View.VISIBLE);
-            fetchDataFromAPI();
+            new FetchAPIAsync().execute(url);
         });
     }
     private void initUI(){
@@ -45,36 +46,44 @@ public class MainActivity extends AppCompatActivity {
         pbLoadData.setVisibility(View.GONE);
     }
 
-    private void fetchDataFromAPI() {
-        hideRecyclerView();
-        new Thread(() -> {
-            try {
-                fetchDataFromAPISuccess();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-    }
     private void hideRecyclerView(){
         runOnUiThread(() -> {
             rvCards.setVisibility(View.GONE);
         });
     }
-    private void fetchDataFromAPISuccess() throws IOException {
+    private List<Card> fetchDataFromAPI() throws IOException {
         String jsonResponse = HttpRequest.get(url);
         Card[] usersArray = gson.fromJson(jsonResponse,Card[].class);
-       // Respone  response = gson.fromJson(jsonResponse,Response.class);
-        //code ,message ,data
-        List<Card> users = Arrays.asList(usersArray);
-        updateUI(users);
+        List<Card> users = List.of(usersArray);
+        return users;
     }
 
     private void updateUI(List<Card> users){
-        runOnUiThread(() -> {
-            pbLoadData.setVisibility(View.GONE);
-            rvCards.setVisibility(View.VISIBLE);
-            cardAdapter.setCards(users);
-        });
+        pbLoadData.setVisibility(View.GONE);
+        rvCards.setVisibility(View.VISIBLE);
+        cardAdapter.setCards(users);
+    }
+    private class FetchAPIAsync extends AsyncTask<String, Void, List<Card>> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            hideRecyclerView();
+        }
 
+
+        @Override
+        protected List<Card> doInBackground(String... url) {
+            try {
+                return fetchDataFromAPI();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Card> users) {
+            super.onPostExecute(users);
+            updateUI(users);
+        }
     }
 }
