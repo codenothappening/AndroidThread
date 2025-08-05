@@ -1,6 +1,5 @@
 package com.example.threadconcept;
 
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,16 +59,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         Card card = cardList.get(position);
         holder.tv_id.setText(String.valueOf(card.getUserId()));
         holder.tv_name.setText(card.getUserName());
-        holder.btnShowMore.setOnClickListener(v -> {
+        Glide.with(holder.itemView.getContext())
+                .load(card.getProfile())
+                .into(holder.img_profile);
+        boolean isExpanded = card.isExpanded();
+        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.btnShowMore.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+        holder.btnShowLess.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.itemView.setOnClickListener(v -> {
+            card.setExpanded(!card.isExpanded());
             notifyItemChanged(position);
-            holder.expandableLayout.setVisibility(View.VISIBLE);
-            holder.btnShowMore.setVisibility(View.GONE);
-            Glide.with(holder.itemView.getContext()).load(card.getProfile()).placeholder(R.drawable.ic_launcher_foreground).into(holder.img_profile);
-        });
-        holder.btnShowLess.setOnClickListener(v -> {
-            notifyItemChanged(position);
-            holder.expandableLayout.setVisibility(View.GONE);
-            holder.btnShowMore.setVisibility(View.VISIBLE);
         });
     }
 

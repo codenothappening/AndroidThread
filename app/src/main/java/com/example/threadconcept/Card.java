@@ -10,14 +10,19 @@ public class Card {
     private int userId;
     @SerializedName("avatar_url")
     private String profile;
+    private boolean isExpanded = false;
 
 
     public String getProfile() {
         return profile;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
     }
 
     public Card(int userId, String userName, String profile) {
