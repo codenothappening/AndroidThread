@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import androidx.activity.EdgeToEdge;
@@ -21,18 +23,19 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     RecyclerView rvCards;
     CardAdapter cardAdapter;
-    Button btnGetData;
+    ImageButton btnGetData;
     ProgressBar pbLoadData;
+
+
     String url = "https://api.github.com/users";
     private final Gson gson = new Gson();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         initUI();
         btnGetData.setOnClickListener(v -> {
-            pbLoadData.setVisibility(View.VISIBLE);
             new FetchAPIAsync().execute(url);
         });
     }
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         cardAdapter = new CardAdapter();
         rvCards.setAdapter(cardAdapter);
         btnGetData = findViewById(R.id.btn_getData);
-        pbLoadData = findViewById(R.id.pb_loadData);
+        pbLoadData = findViewById(R.id.pb);
         pbLoadData.setVisibility(View.GONE);
     }
 
@@ -63,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
         rvCards.setVisibility(View.VISIBLE);
         cardAdapter.setCards(users);
     }
+
     private class FetchAPIAsync extends AsyncTask<String, Void, List<Card>> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pbLoadData.setVisibility(View.VISIBLE);
             hideRecyclerView();
         }
 

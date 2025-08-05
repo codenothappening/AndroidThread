@@ -8,11 +8,22 @@ public class Card {
     private String userName;
     @SerializedName("id")
     private int userId;
+    @SerializedName("avatar_url")
+    private String profile;
 
 
-    public Card(int userId, String userName) {
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public Card(int userId, String userName, String profile) {
         this.userId = userId;
         this.userName = userName;
+        this.profile = profile;
     }
 
 

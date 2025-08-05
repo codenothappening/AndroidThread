@@ -8,7 +8,9 @@ public class CardViewModel extends BaseObservable {
     int userId;
     String userName;
 
-    Card card = new Card(0, null);
+
+
+    Card card = new Card(0, null,"");
     @Bindable
     public String getUserName(){
         return card.getUserName();
