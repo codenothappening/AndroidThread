@@ -1,15 +1,13 @@
-package com.example.threadconcept;
+package com.example.threadconcept.viewmodel;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.Observable;
+
+import com.example.threadconcept.model.Card;
 
 public class CardViewModel extends BaseObservable {
     int userId;
     String userName;
-
-
-
     Card card = new Card(0, null,"");
     @Bindable
     public String getUserName(){

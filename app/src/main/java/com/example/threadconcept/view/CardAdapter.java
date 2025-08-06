@@ -1,4 +1,4 @@
-package com.example.threadconcept;
+package com.example.threadconcept.view;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.threadconcept.R;
+import com.example.threadconcept.model.Card;
 
 import java.util.ArrayList;
 import java.util.List;

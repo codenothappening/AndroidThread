@@ -1,4 +1,4 @@
-package com.example.threadconcept;
+package com.example.threadconcept.model;
 
 import android.util.Log;
 import java.io.IOException;

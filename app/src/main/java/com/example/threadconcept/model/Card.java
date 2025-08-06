@@ -1,9 +1,11 @@
-package com.example.threadconcept;
+package com.example.threadconcept.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Card {
 
+// This is the Model Class and in the MVVM architecture pattern it represents the data and business logic of the application.
+// It is responsible for managing the data and providing an interface to access and manipulate the data
+public class Card {
     @SerializedName("login")
     private String userName;
     @SerializedName("id")
