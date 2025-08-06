@@ -79,8 +79,4 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         return cardList.size();
     }
 
-    public void updateData(List<Card> newCards) {
-        this.cardList = newCards;
-        notifyDataSetChanged();
-    }
 }

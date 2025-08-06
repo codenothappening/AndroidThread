@@ -7,12 +7,14 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.threadconcept.model.HttpRequest;
 import com.example.threadconcept.R;
 import com.example.threadconcept.model.Card;
+import com.example.threadconcept.viewmodel.CardViewModel;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView rvCards;
+    CardViewModel cardViewModel;
     CardAdapter cardAdapter;
     ImageButton btnGetData;
     ProgressBar pbLoadData;
@@ -30,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         initUI();
         btnGetData.setOnClickListener(v -> {
@@ -59,10 +61,13 @@ public class MainActivity extends AppCompatActivity {
         return users;
     }
 
-    private void updateUI(List<Card> users){
-        pbLoadData.setVisibility(View.GONE);
-        rvCards.setVisibility(View.VISIBLE);
-        cardAdapter.setCards(users);
+    private void updateUI(){
+        cardViewModel = new ViewModelProvider(this).get(CardViewModel.class);
+        cardViewModel.getCard().observe(this,cards -> {
+            pbLoadData.setVisibility(View.GONE);
+            rvCards.setVisibility(View.VISIBLE);
+            cardAdapter.setCards(cards);
+        });
     }
 
     private class FetchAPIAsync extends AsyncTask<String, Void, List<Card>> {
@@ -86,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Card> users) {
             super.onPostExecute(users);
-            updateUI(users);
+            updateUI();
+            cardViewModel.setCardList(users);
         }
     }
 }

@@ -1,28 +1,19 @@
 package com.example.threadconcept.viewmodel;
-
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.threadconcept.model.Card;
 
-public class CardViewModel extends BaseObservable {
-    int userId;
-    String userName;
-    Card card = new Card(0, null,"");
-    @Bindable
-    public String getUserName(){
-        return card.getUserName();
-    }
-    @Bindable
-    public int getUserId(){
-        return card.getUserId();
-    }
+import java.util.ArrayList;
+import java.util.List;
 
-    public void setUserName(String userName){
-        card.setUserName(userName);
+public class CardViewModel extends ViewModel {
+    private MutableLiveData <List<Card>> cardList = new MutableLiveData<>(new ArrayList<>());
+    public LiveData<List<Card>> getCard(){
+        return cardList;
     }
-
-    public void setUserId(int userId){
-        card.setUserId(userId);
+    public void setCardList(List<Card> cards){
+        cardList.setValue(cards);
     }
 }
